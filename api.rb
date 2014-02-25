@@ -71,7 +71,7 @@ class API < Grape::API
       end
 
       params do
-        requires :label, type: String, regex: /^.{,32}$/
+        requires :label, type: String, regexp: /^.{,32}$/
       end
       put :label do
         @light.set_label(params[:label])
