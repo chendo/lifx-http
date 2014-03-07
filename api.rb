@@ -107,6 +107,12 @@ class API < Grape::API
       requires :light_id, type: String, desc: "Light ID"
     end
     namespace ":light_id" do
+      after_validation do
+        @target = lifx.lights.with_id(params[:light_id])
+        if @target.nil?
+          error!("Could not find light with ID: #{params[:light_id]}", 404)
+        end
+      end
       desc "Sets label on light"
       params do
         requires :label, type: String, regexp: /^.{,32}$/, desc: "Label"
