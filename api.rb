@@ -8,9 +8,8 @@ class API < Grape::API
       format_with(:iso_timestamp) { |dt| dt.iso8601 }
       expose :id
       expose :label
-      expose :site_id do |light, options|
-        light.site.id
-      end
+      expose :site_id
+      expose :tags
       expose :on do |light, options|
         light.on?
       end
@@ -26,31 +25,58 @@ class API < Grape::API
     def lifx
       $lifx
     end
+
+    def ensure_light_target!
+      error!('Must target a single light', 400) unless @target.is_a?(LIFX::Light)
+    end
+
+    def present_target(target)
+      if target.is_a?(LIFX::LightCollection)
+        present target.to_a, with: Entities::Light
+      else
+        present light, with: Entities::Light
+      end
+    end
   end
 
   get "lights" do
-    present lifx.lights.values, with: Entities::Light
+    present_target(lifx.lights.lights)
   end
 
   resources :lights do
     params do
-      requires :light_id, type: String, desc: 'Light ID'
+      requires :selector, type: String, desc: 'Light selector'
     end
 
-    namespace ":light_id" do
+    namespace ":selector" do
       after_validation do
-        @light = lifx.lights[params[:light_id]]
-        if @light.nil?
-          raise "Light not found"
+        selector = params[:selector]
+        case selector
+        when /^tag:(.+)$/
+          @target = lifx.lights.with_tag($1)
+        when /^label:(.+)$/
+          @target = lifx.lights.with_label($1)
+        when /^all$/
+          @target = lifx.lights
+        else
+          @target = lifx.lights.with_id(selector)
+        end
+
+        if @target.nil?
+          error! "Could not resolve selector: selector", 404
         end
       end
 
+      get do
+        present_target(@target)
+      end
+
       put :on do
-        @light.on!
+        present_target(@target.turn_on)
       end
 
       put :off do
-        @light.off!
+        present_target(@target.turn_off)
       end
 
       params do
@@ -58,7 +84,7 @@ class API < Grape::API
         requires :saturation, type: Float
         requires :brightness, type: Float
         optional :kelvin, type: Integer, default: 3_500
-        optional :duration, type: Float, default: 0.5
+        optional :duration, type: Float, default: 1
       end
       put :color do
         color = LIFX::Color.hsbk(
@@ -67,15 +93,33 @@ class API < Grape::API
           params[:brightness],
           params[:kelvin]
         )
-        @light.set_color(color, params[:duration])
+        present_target(@target.set_color(color, duration: params[:duration]))
       end
 
       params do
         requires :label, type: String, regexp: /^.{,32}$/
       end
       put :label do
-        @light.set_label(params[:label])
+        ensure_light_target!
+        present_target(@target.set_label(params[:label]))
       end
+
+      params do
+        requires :tag, type: String, regexp: /^.{1,32}$/
+      end
+      post :tag do
+        ensure_light_target!
+        present_target(@target.add_tag(params[:tag]))
+      end
+
+      params do
+        requires :tag, type: String, regexp: /^.{1,32}$/
+      end
+      delete :tag do
+        ensure_light_target!
+        present_target(@target.remove_tag(params[:tag]))
+      end
+
     end
   end
 end

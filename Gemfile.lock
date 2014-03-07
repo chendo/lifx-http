@@ -1,9 +1,10 @@
 GIT
   remote: git@github.com:LifxLabs/lifx-gem.git
-  revision: 06853dd8141849663615b7fd2f2e9f0859fe6e27
+  revision: c32381e0482c44d6da64d6a7467434c8cc0291b9
   specs:
     lifx (0.1.0)
       bindata
+      configatron (~> 3.0)
       timers
       yell
 
@@ -28,6 +29,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     columnize (0.3.6)
+    configatron (3.0.1)
     daemons (1.1.9)
     debugger-linecache (1.2.0)
     descendants_tracker (0.0.3)
