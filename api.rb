@@ -1,5 +1,6 @@
 require 'grape'
 require 'grape-entity'
+require 'grape-swagger'
 require 'byebug'
 
 class API < Grape::API
@@ -19,6 +20,10 @@ class API < Grape::API
     end
   end
 
+  before do
+    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Request-Method'] = '*'
+  end
   format :json
   default_format :json
   helpers do
@@ -34,7 +39,7 @@ class API < Grape::API
       if target.is_a?(LIFX::LightCollection)
         present target.to_a, with: Entities::Light
       else
-        present light, with: Entities::Light
+        present target, with: Entities::Light
       end
     end
   end
@@ -122,4 +127,6 @@ class API < Grape::API
 
     end
   end
+
+  add_swagger_documentation
 end
