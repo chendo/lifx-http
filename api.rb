@@ -20,10 +20,6 @@ class API < Grape::API
     end
   end
 
-  before do
-    header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Request-Method'] = '*'
-  end
   format :json
   default_format :json
   helpers do
@@ -44,13 +40,14 @@ class API < Grape::API
     end
   end
 
+  desc "List of all known lights"
   get "lights" do
     present_target(lifx.lights.lights)
   end
 
   resources :lights do
     params do
-      requires :selector, type: String, desc: 'Light selector'
+      requires :selector, type: String, desc: "Can be 'all', 'label:[label]', 'tag:[tag]' and '[light id]'"
     end
 
     namespace ":selector" do
@@ -72,24 +69,28 @@ class API < Grape::API
         end
       end
 
+      desc "Returns light(s) based on selector"
       get do
         present_target(@target)
       end
 
+      desc "Turn light(s) on"
       put :on do
         present_target(@target.turn_on)
       end
 
+      desc "Turn light(s) off"
       put :off do
         present_target(@target.turn_off)
       end
 
+      desc "Set colour of light(s)"
       params do
-        requires :hue, type: Float
-        requires :saturation, type: Float
-        requires :brightness, type: Float
-        optional :kelvin, type: Integer, default: 3_500
-        optional :duration, type: Float, default: 1
+        requires :hue, type: Float, desc: "Hue: 0-360"
+        requires :saturation, type: Float, desc: "Saturation: 0-1"
+        requires :brightness, type: Float, desc: "Brightness: 0-1"
+        optional :kelvin, type: Integer, default: 3_500, desc: "Kelvin: 2500-10000. Defaults to 3500"
+        optional :duration, type: Float, default: 1, desc: "Duration in seconds. Defaults to 1.0"
       end
       put :color do
         color = LIFX::Color.hsbk(
@@ -100,33 +101,40 @@ class API < Grape::API
         )
         present_target(@target.set_color(color, duration: params[:duration]))
       end
+    end
 
+    params do
+      requires :light_id, type: String, desc: "Light ID"
+    end
+    namespace ":light_id" do
+      desc "Sets label on light"
       params do
-        requires :label, type: String, regexp: /^.{,32}$/
+        requires :label, type: String, regexp: /^.{,32}$/, desc: "Label"
       end
       put :label do
         ensure_light_target!
         present_target(@target.set_label(params[:label]))
       end
 
+      desc "Adds a tag a light"
       params do
-        requires :tag, type: String, regexp: /^.{1,32}$/
+        requires :tag, type: String, regexp: /^.{1,32}$/, desc: "Tag"
       end
       post :tag do
         ensure_light_target!
         present_target(@target.add_tag(params[:tag]))
       end
 
+      desc "Removes a tag from a light"
       params do
-        requires :tag, type: String, regexp: /^.{1,32}$/
+        requires :tag, type: String, regexp: /^.{1,32}$/, desc: "Tag"
       end
       delete :tag do
         ensure_light_target!
         present_target(@target.remove_tag(params[:tag]))
       end
-
     end
   end
 
-  add_swagger_documentation
+  add_swagger_documentation(markdown: true)
 end

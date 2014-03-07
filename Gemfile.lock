@@ -63,6 +63,7 @@ GEM
     rack (1.5.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-cors (0.2.9)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
     thin (1.6.1)
@@ -90,4 +91,5 @@ DEPENDENCIES
   grape-entity
   grape-swagger
   lifx!
+  rack-cors
   thin
