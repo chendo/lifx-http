@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:LifxLabs/lifx-gem.git
-  revision: c32381e0482c44d6da64d6a7467434c8cc0291b9
+  revision: 95dc23f0850c33ced484a59dae6266327c8e8eba
   specs:
     lifx (0.1.0)
       bindata

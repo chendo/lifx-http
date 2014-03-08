@@ -84,6 +84,16 @@ class API < Grape::API
         present_target(@target.turn_off)
       end
 
+      desc "Toggle light(s) power state. Will turn lights off if any are on."
+      put :toggle do
+        if @target.is_a?(LIFX::LightCollection)
+          on = @target.to_a.any? { |light| light.on? }
+          present_target(on ? @target.turn_off : @target.turn_on)
+        else
+          @target.on? ? @target.turn_off : @target.turn_on
+        end
+      end
+
       desc "Set colour of light(s)"
       params do
         requires :hue, type: Float, desc: "Hue: 0-360"
