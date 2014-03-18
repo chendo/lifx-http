@@ -1,7 +1,6 @@
 require 'grape'
 require 'grape-entity'
 require 'grape-swagger'
-require 'byebug'
 
 class API < Grape::API
   module Entities
