@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:LifxLabs/lifx-gem.git
+  remote: git@github.com:LIFX/lifx-gem.git
   revision: 95dc23f0850c33ced484a59dae6266327c8e8eba
   specs:
     lifx (0.1.0)
