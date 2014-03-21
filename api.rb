@@ -1,7 +1,9 @@
 require 'grape'
 require 'grape-entity'
 require 'grape-swagger'
-require 'byebug'
+require 'lifx'
+
+LIFX::Client.lan.discover
 
 class API < Grape::API
   module Entities
@@ -24,7 +26,7 @@ class API < Grape::API
   default_format :json
   helpers do
     def lifx
-      $lifx
+      @lifx ||= LIFX::Client.lan
     end
 
     def ensure_light_target!
