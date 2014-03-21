@@ -18,7 +18,7 @@ class API < Grape::API
       end
       expose :color
       expose :last_seen
-      expose :age
+      expose :seconds_since_seen
     end
   end
 

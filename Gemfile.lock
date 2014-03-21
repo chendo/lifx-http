@@ -1,8 +1,8 @@
 GIT
   remote: git@github.com:LIFX/lifx-gem.git
-  revision: 95dc23f0850c33ced484a59dae6266327c8e8eba
+  revision: 062e770fab7eb59f860991a953d3d564f6781a5f
   specs:
-    lifx (0.1.0)
+    lifx (0.3.0)
       bindata
       configatron (~> 3.0)
       timers
@@ -80,7 +80,7 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0.1)
       equalizer (~> 0.0.7)
-    yell (2.0.3)
+    yell (2.0.4)
 
 PLATFORMS
   ruby
