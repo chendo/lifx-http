@@ -10,11 +10,13 @@ class API < Grape::API
     class Light < Grape::Entity
       format_with(:iso_timestamp) { |dt| dt.iso8601 }
       expose :id
-      expose :label
+      expose :label do |light, options|
+        light.label(fetch: false)
+      end
       expose :site_id
       expose :tags
       expose :on do |light, options|
-        light.on?
+        light.on?(fetch: false)
       end
       expose :color
       expose :last_seen
