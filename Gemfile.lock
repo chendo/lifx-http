@@ -1,8 +1,8 @@
 GIT
   remote: git@github.com:LIFX/lifx-gem.git
-  revision: 062e770fab7eb59f860991a953d3d564f6781a5f
+  revision: 1da0818e5a1520f827e48393737eaf901cc9dd3e
   specs:
-    lifx (0.3.0)
+    lifx (0.4.0)
       bindata
       configatron (~> 3.0)
       timers
