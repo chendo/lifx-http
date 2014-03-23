@@ -94,7 +94,7 @@ class API < Grape::API
           on = @target.to_a.any? { |light| light.on? }
           present_target(on ? @target.turn_off : @target.turn_on)
         else
-          @target.on? ? @target.turn_off : @target.turn_on
+          present_target(@target.on? ? @target.turn_off : @target.turn_on)
         end
       end
 
