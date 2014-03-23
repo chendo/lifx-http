@@ -1,4 +1,4 @@
-# LIFX RESTful API
+# LIFX HTTP API
 
 This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API does not include any additional reliability checks that does not already exist in the [LIFX gem](https://github.com/LIFX/lifx-gem).
 

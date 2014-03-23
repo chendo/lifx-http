@@ -1,13 +1,3 @@
-GIT
-  remote: git@github.com:LIFX/lifx-gem.git
-  revision: 1da0818e5a1520f827e48393737eaf901cc9dd3e
-  specs:
-    lifx (0.4.0)
-      bindata
-      configatron (~> 3.0)
-      timers
-      yell
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -29,7 +19,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     columnize (0.3.6)
-    configatron (3.0.1)
+    configatron (3.0.2)
     daemons (1.1.9)
     debugger-linecache (1.2.0)
     descendants_tracker (0.0.3)
@@ -57,6 +47,11 @@ GEM
     i18n (0.6.9)
     ice_nine (0.11.0)
     kramdown (1.3.2)
+    lifx (0.4.0)
+      bindata
+      configatron (~> 3.0)
+      timers
+      yell
     minitest (4.7.5)
     multi_json (1.8.4)
     multi_xml (0.5.5)
@@ -90,6 +85,6 @@ DEPENDENCIES
   grape
   grape-entity
   grape-swagger
-  lifx!
+  lifx
   rack-cors
   thin
