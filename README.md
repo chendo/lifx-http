@@ -1,6 +1,6 @@
 # LIFX HTTP API
 
-This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API does not include any additional reliability checks that does not already exist in the [LIFX gem](https://github.com/LIFX/lifx-gem).
+This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API adds some reliability that the [LIFX gem](https://github.com/LIFX/lifx-gem) does not include.
 
 ## Requirements
 
@@ -12,10 +12,14 @@ This is an **unofficial** JSON RESTful API service for controlling LIFX devices.
 * Clone the repo: `git clone https://github.com/chendo/lifx-rest.git`
 * Change directory: `cd lifx-rest`
 * Bundle: `bundle`
-* Run: `./start.sh`
+* Run: `./start.sh` - serves the API up on `0.0.0.0:3000`.
 * Test if working: `curl http://localhost:3000/lights.json`
+* Toggle all lights: `curl -XPUT http://localhost:3000/lights/all/toggle`
+* Set all lights to green:
+  * URL params: `curl -XPUT http://localhost:3000/lights/all/color?hue=120&saturation=1&brightness=1&duration=2`
+  * JSON body: `curl -XPUT http://localhost:3000/lights/all/color -H "Content-Type: application/json" -d '{"hue": 120, "saturation": 1, "brightness": 1, "duration":2}'`
+  * Override method by setting `_method`: `curl http://localhost:3000/lights/all/color?hue=120&saturation=1&brightness=1&duration=2&_method=put`
 
-`start.sh` will serve the API up on `0.0.0.0:3000`.
 
 ## API
 
