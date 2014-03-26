@@ -44,21 +44,23 @@ class API < Grape::API
     end
 
     def set_power(target, state)
-      target.set_power(state)
-      target.refresh
       if target.is_a?(LIFX::LightCollection)
-        wait_until -> { target.to_a.all? { |light| light.power(fetch: false) == state} }
+        wait_until -> { target.to_a.all? { |light| light.power(fetch: false) == state} }, retry_interval: 1, timeout: 10 do
+          target.set_power(state)
+          target.refresh
+        end
       else
-        wait_until -> { target.power(refresh: true) == state }
+        target.set_power!(state)
       end
     rescue Timeout::Error
 
     end
 
-    def wait_until(condition_proc, timeout: 5)
+    def wait_until(condition_proc, timeout: 5, retry_interval: 0.5, &action_block)
       Timeout.timeout(timeout) do
         while !condition_proc.call
-          sleep 0.1
+          action_block.call if action_block
+          sleep(retry_interval)
         end
       end
     end
