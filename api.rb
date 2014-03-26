@@ -49,7 +49,7 @@ class API < Grape::API
       if target.is_a?(LIFX::LightCollection)
         wait_until -> { target.to_a.all? { |light| light.power(fetch: false) == state} }
       else
-        wait_until -> { target.power(refresh: true) == desired_state }
+        wait_until -> { target.power(refresh: true) == state }
       end
     rescue Timeout::Error
 
