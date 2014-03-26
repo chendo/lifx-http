@@ -141,7 +141,8 @@ class API < Grape::API
           params[:brightness],
           params[:kelvin]
         )
-        present_target(@target.set_color(color, duration: params[:duration]))
+        3.times { @target.set_color(color, duration: params[:duration]) } # Retry
+        present_target(@target)
       end
     end
 
