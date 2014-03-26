@@ -141,7 +141,7 @@ class API < Grape::API
           params[:brightness],
           params[:kelvin]
         )
-        3.times { @target.set_color(color, duration: params[:duration]) } # Retry
+        lifx.sync { 3.times { @target.set_color(color, duration: params[:duration]) } } # Retry 
         present_target(@target)
       end
     end
