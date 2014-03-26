@@ -1,7 +1,9 @@
 $LOAD_PATH << File.dirname(__FILE__)
-require 'api'
 require 'rack/cors'
+require 'method_override'
+require 'api'
 
+use MethodOverride
 use Rack::Cors do
   allow do
     origins '*'
