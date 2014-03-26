@@ -42,6 +42,26 @@ class API < Grape::API
         present target, with: Entities::Light
       end
     end
+
+    def set_power(target, state)
+      target.set_power(state)
+      target.refresh
+      if target.is_a?(LIFX::LightCollection)
+        wait_until -> { target.to_a.all? { |light| light.power(fetch: false) == state} }
+      else
+        wait_until -> { target.power(refresh: true) == desired_state }
+      end
+    rescue Timeout::Error
+
+    end
+
+    def wait_until(condition_proc, timeout: 5)
+      Timeout.timeout(timeout) do
+        while !condition_proc.call
+          sleep 0.1
+        end
+      end
+    end
   end
 
   desc "List of all known lights"
@@ -80,21 +100,27 @@ class API < Grape::API
 
       desc "Turn light(s) on"
       put :on do
-        present_target(@target.turn_on)
+        set_power(@target, :on)
+        present_target(@target)
       end
 
       desc "Turn light(s) off"
       put :off do
-        present_target(@target.turn_off)
+        set_power(@target, :off)
+        present_target(@target)
       end
 
       desc "Toggle light(s) power state. Will turn lights off if any are on."
       put :toggle do
         if @target.is_a?(LIFX::LightCollection)
           on = @target.to_a.any? { |light| light.on? }
-          present_target(on ? @target.turn_off : @target.turn_on)
+          desired_state = on ? :off : :on
+          set_power(@target, desired_state)
+          present_target(@target)
         else
-          present_target(@target.on? ? @target.turn_off : @target.turn_on)
+          desired_state = @target.on? ? :off : :on
+          set_power(@target, desired_state)
+          present_target(@target)
         end
       end
 
