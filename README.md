@@ -1,24 +1,24 @@
 # LIFX HTTP API
 
+[![Gem Version](https://badge.fury.io/rb/lifx-http.png)](https://rubygems.org/gems/lifx-http) 
+
 This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API adds some reliability that the [LIFX gem](https://github.com/LIFX/lifx-gem) does not include.
 
 ## Requirements
 
-* Ruby 2.1.1
-* Bundler
+* Ruby 2.0+
+* Tested on OS X Mavericks, but should work for other *nix platforms.
 
 ## Usage
 
-* Clone the repo: `git clone https://github.com/chendo/lifx-rest.git`
-* Change directory: `cd lifx-rest`
-* Bundle: `bundle`
-* Run: `./start.sh` - serves the API up on `0.0.0.0:3000`.
-* Test if working: `curl http://localhost:3000/lights.json`
-* Toggle all lights: `curl -XPUT http://localhost:3000/lights/all/toggle`
+* Install the gem: `gem install lifx-http`
+* Run in foreground (no daemonizing yet): `lifx-http`
+* Test if working: `curl http://localhost:56780/lights.json`
+* Toggle all lights: `curl -XPUT http://localhost:56780/lights/all/toggle`
 * Set all lights to green:
-  * URL params: `curl -XPUT http://localhost:3000/lights/all/color?hue=120&saturation=1&brightness=1&duration=2`
-  * JSON body: `curl -XPUT http://localhost:3000/lights/all/color -H "Content-Type: application/json" -d '{"hue": 120, "saturation": 1, "brightness": 1, "duration":2}'`
-  * Override method by setting `_method`: `curl http://localhost:3000/lights/all/color?hue=120&saturation=1&brightness=1&duration=2&_method=put`
+  * URL params: `curl -XPUT http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2 -d ''`
+  * JSON body: `curl -XPUT http://localhost:56780/lights/all/color -H "Content-Type: application/json" -d '{"hue": 120, "saturation": 1, "brightness": 1, "duration":2}'`
+  * Override method by setting `_method`: `curl http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2&_method=put`
 
 
 ## API
