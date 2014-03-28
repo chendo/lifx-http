@@ -1,40 +1,36 @@
-GIT
-  remote: https://github.com/LIFX/lifx-gem
-  revision: 7940254d09d4b4566f8a82b60f022b7babe0cfea
+PATH
+  remote: .
   specs:
-    lifx (0.4.4)
-      bindata (~> 2.0)
-      configatron (~> 3.0)
-      timers (~> 2.0)
-      yell (~> 2.0)
+    lifx-http (0.2.0)
+      grape (~> 0.6)
+      grape-entity (~> 0.4)
+      grape-swagger (~> 0.7)
+      lifx (= 0.4.5)
+      rack (~> 1.5)
+      rack-cors (~> 0.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.0.3)
-      i18n (~> 0.6, >= 0.6.4)
+    activesupport (4.0.4)
+      i18n (~> 0.6, >= 0.6.9)
       minitest (~> 4.2)
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
-    atomic (1.1.14)
-    axiom-types (0.0.5)
-      descendants_tracker (~> 0.0.1)
-      ice_nine (~> 0.9)
+    atomic (1.1.16)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     bindata (2.0.0)
-    builder (3.1.4)
-    byebug (2.6.0)
-      columnize (~> 0.3)
-      debugger-linecache (~> 1.2)
+    builder (3.2.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    columnize (0.3.6)
     configatron (3.0.2)
-    daemons (1.1.9)
-    debugger-linecache (1.2.0)
-    descendants_tracker (0.0.3)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     equalizer (0.0.9)
-    eventmachine (1.0.3)
     grape (0.6.1)
       activesupport
       builder
@@ -53,12 +49,16 @@ GEM
       grape-entity (>= 0.3.0)
       kramdown (>= 1.3.1)
     hashie (2.0.5)
-    hitimes (1.2.1)
     i18n (0.6.9)
     ice_nine (0.11.0)
-    kramdown (1.3.2)
+    kramdown (1.3.3)
+    lifx (0.4.5)
+      bindata (~> 2.0)
+      configatron (~> 3.0)
+      timers (~> 1.0)
+      yell (~> 2.0)
     minitest (4.7.5)
-    multi_json (1.8.4)
+    multi_json (1.9.2)
     multi_xml (0.5.5)
     rack (1.5.2)
     rack-accept (0.4.5)
@@ -66,30 +66,22 @@ GEM
     rack-cors (0.2.9)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
-    thin (1.6.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 1.0.0)
-      rack (>= 1.0.0)
-    thread_safe (0.1.3)
-      atomic
-    timers (2.0.0)
-      hitimes
-    tzinfo (0.3.38)
-    virtus (1.0.1)
-      axiom-types (~> 0.0.5)
+    rake (10.2.2)
+    thread_safe (0.3.1)
+      atomic (>= 1.1.7, < 2)
+    timers (1.1.0)
+    tzinfo (0.3.39)
+    virtus (1.0.2)
+      axiom-types (~> 0.1)
       coercible (~> 1.0)
-      descendants_tracker (~> 0.0.1)
-      equalizer (~> 0.0.7)
+      descendants_tracker (~> 0.0.3)
+      equalizer (~> 0.0.9)
     yell (2.0.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
-  grape
-  grape-entity
-  grape-swagger
-  lifx!
-  rack-cors
-  thin
+  bundler (~> 1.3)
+  lifx-http!
+  rake (~> 10.1)
