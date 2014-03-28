@@ -2,6 +2,19 @@
 require "lifx-http"
 require "rack/cors"
 require "lifx-http/method_override"
+require "webrick"
+require "optparse"
+
+options = {
+  port: 56780
+}
+OptionParser.new do |parser|
+  parser.banner = "Usage: lifx-http [options]"
+  parser.version = LIFXHTTP::VERSION
+  parser.on("-p PORT", "--port PORT", "Specify the port to run lifx-http on. Defaults to #{options[:port]}") do |port|
+    options[:port] = port.to_i
+  end
+end.parse!
 
 app = Rack::Builder.new do
   use LIFXHTTP::MethodOverride
@@ -15,4 +28,4 @@ app = Rack::Builder.new do
   run LIFXHTTP::API
 end
 
-Rack::Handler::WEBrick.run(app, Port: 56780)
+Rack::Handler::WEBrick.run(app, Port: options[:port])
