@@ -9,7 +9,7 @@ require "mdns"
 
 options = {
   port: 56780,
-  mdns_host: "lifx-http.local",
+  mdns_host: "lifx-http",
   mdns_ip: begin
     Socket.ip_address_list.find { |ip| ip.ipv4_private? }.ip_address
   end
@@ -20,6 +20,12 @@ OptionParser.new do |parser|
   parser.version = LIFXHTTP::VERSION
   parser.on("-p PORT", "--port PORT", "Specify the port to run lifx-http on. Defaults to #{options[:port]}") do |port|
     options[:port] = port.to_i
+  end
+  parser.on("--hostname HOSTNAME", "Specify the host the MDNS broadcast should use. Defaults to #{options[:mdns_host]}") do |host|
+    options[:mdns_host] = host
+  end
+  parser.on("--ip MDNS_IP", "Specify the IP the MDNS record should resolve to. Defaults to #{options[:mdns_ip]}") do |ip|
+    options[:mdns_ip] = ip
   end
 end.parse!
 
@@ -36,7 +42,7 @@ app = Rack::Builder.new do
 end
 
 if options[:mdns_ip]
-  MDNS.add_record("#{options[:mdns_host]}. 120 A #{options[:mdns_ip]}")
+  MDNS.add_record("#{options[:mdns_host]}.local. 120 A #{options[:mdns_ip]}")
   MDNS.start
   puts "LIFX HTTP can be reached at http://#{options[:mdns_host]}:#{options[:port]}/"
 end
