@@ -42,7 +42,7 @@ app = Rack::Builder.new do
 end
 
 if options[:mdns_ip]
-  MDNS.add_record("#{options[:mdns_host]}.local. 120 A #{options[:mdns_ip]}")
+  MDNS.add_record("#{options[:mdns_host]}.local", 120, options[:mdns_ip])
   MDNS.start
   puts "lifx-http can be reached at http://#{options[:mdns_host]}.local:#{options[:port]}/"
 end
