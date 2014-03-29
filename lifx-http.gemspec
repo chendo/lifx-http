@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rack", "~> 1.5"
   spec.add_dependency "rack-cors", "~> 0.2"
   spec.add_dependency "lifx", "= 0.4.5"
-  spec.add_dependency "mdns", ">= 0.1.2"
+  spec.add_dependency "mdns", "~> 0.2"
   spec.add_dependency "grape", "~> 0.6"
   spec.add_dependency "grape-entity", "~> 0.4"
   spec.add_dependency "grape-swagger", "~> 0.7"

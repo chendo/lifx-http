@@ -57,6 +57,14 @@ You should see something like this:
 
 ## Changelog
 
+#### 0.2.3
+
+- Update MDNS gem
+
+#### 0.2.2
+
+- MDNS fix
+
 #### 0.2.1
 
 - Duration now supports minute and hour suffixes e.g. "12h" for 12 hours thanks to @Bluebie
