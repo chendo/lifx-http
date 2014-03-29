@@ -133,7 +133,7 @@ module LIFXHTTP
           requires :saturation, type: Float, desc: "Saturation: 0-1"
           requires :brightness, type: Float, desc: "Brightness: 0-1"
           optional :kelvin, type: Integer, default: 3_500, desc: "Kelvin: 2500-10000. Defaults to 3500"
-          optional :duration, type: Float, default: 1, desc: "Duration in seconds. Defaults to 1.0"
+          optional :duration, type: String, default: '1', desc: "Duration in seconds. Defaults to 1.0. Suffix with m or h to specify minutes or hours. For example, 10m"
         end
         put :color do
           color = LIFX::Color.hsbk(
@@ -142,7 +142,14 @@ module LIFXHTTP
             params[:brightness],
             params[:kelvin]
           )
-          lifx.sync { 3.times { @target.set_color(color, duration: params[:duration]) } } # Retry 
+          
+          # parse minute and hour duration forms
+          duration = params[:duration].to_f
+          print "#{params[:duration]} => "
+          duration = params[:duration].to_f * 60.0 if params[:duration].ends_with? 'm'
+          duration = params[:duration].to_f * 60.0 * 60.0 if params[:duration].ends_with? 'h'
+          puts duration
+          lifx.sync { 3.times { @target.set_color(color, duration: duration) } } # Retry 
           present_target(@target)
         end
       end
