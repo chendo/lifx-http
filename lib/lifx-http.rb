@@ -145,10 +145,8 @@ module LIFXHTTP
           
           # parse minute and hour duration forms
           duration = params[:duration].to_f
-          print "#{params[:duration]} => "
           duration = params[:duration].to_f * 60.0 if params[:duration].ends_with? 'm'
           duration = params[:duration].to_f * 60.0 * 60.0 if params[:duration].ends_with? 'h'
-          puts duration
           lifx.sync { 3.times { @target.set_color(color, duration: duration) } } # Retry 
           present_target(@target)
         end
