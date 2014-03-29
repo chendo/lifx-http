@@ -4,6 +4,11 @@
 
 This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API adds some reliability that the [LIFX gem](https://github.com/LIFX/lifx-gem) does not include.
 
+## Features
+
+* Mostly synchronous, apart from setting colour
+* Supports MDNS
+
 ## Requirements
 
 * Ruby 2.0+
@@ -21,7 +26,6 @@ This is an **unofficial** JSON RESTful API service for controlling LIFX devices.
   * Override method by setting `_method`: `curl http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2&_method=put`
 * Start a slow sunrise effect:
   * `curl -XPUT http://localhost:56780/lights/all/color?hue=35&saturation=0.37&brightness=0.65&duration=10m -d ''`
-
 
 ## API
 
@@ -47,6 +51,17 @@ To view documentation and play with the API, start the API server locally, then 
 
 You should see something like this:
 ![Swagger screenshot](doc.png)
+
+## Changelog
+
+#### 0.2.1
+
+- Duration now supports minute and hour suffixes e.g. "12h" for 12 hours thanks to @Bluebie
+- MDNS support! Enables easy discovery of a LIFX HTTP instance on the LAN.
+
+#### 0.2.0
+
+- First gem release
 
 ## License
 
