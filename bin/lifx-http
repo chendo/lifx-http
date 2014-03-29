@@ -1,13 +1,20 @@
 #!/usr/bin/env ruby
-require_relative "../lib/lifx-http"
+$LOAD_PATH << File.join(File.dirname(__FILE__), "..", "lib")
+require "lifx-http"
 require "rack/cors"
 require "lifx-http/method_override"
 require "webrick"
 require "optparse"
+require "mdns"
 
 options = {
-  port: 56780
+  port: 56780,
+  mdns_host: "lifx-http.local",
+  mdns_ip: begin
+    Socket.ip_address_list.find { |ip| ip.ipv4_private? }.ip_address
+  end
 }
+
 OptionParser.new do |parser|
   parser.banner = "Usage: lifx-http [options]"
   parser.version = LIFXHTTP::VERSION
@@ -26,6 +33,12 @@ app = Rack::Builder.new do
   end
 
   run LIFXHTTP::API
+end
+
+if options[:mdns_ip]
+  MDNS.add_record("#{options[:mdns_host]}. 120 A #{options[:mdns_ip]}")
+  MDNS.start
+  puts "LIFX HTTP can be reached at http://#{options[:mdns_host]}:#{options[:port]}/"
 end
 
 Rack::Handler::WEBrick.run(app, Port: options[:port])
