@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "lifx-http"
+require_relative "../lib/lifx-http"
 require "rack/cors"
 require "lifx-http/method_override"
 require "webrick"
