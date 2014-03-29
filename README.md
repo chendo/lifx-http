@@ -17,6 +17,9 @@ This is an **unofficial** JSON RESTful API service for controlling LIFX devices.
 ## Usage
 
 * Install the gem: `gem install lifx-http`
+  * On OS X Mavericks using system Ruby: `sudo gem install lifx-http`
+    * If you see this: `clang: error: unknown argument: '-multiply_definedsuppress' [-Wunused-command-line-argument-hard-error-in-future]`
+      Run `export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future; sudo -E gem install lifx-http`
 * Run in foreground (no daemonizing yet): `lifx-http`
 * Test if working: `curl http://localhost:56780/lights.json`
 * Toggle all lights: `curl -XPUT http://localhost:56780/lights/all/toggle`

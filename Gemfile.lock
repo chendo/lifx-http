@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lifx-http (0.2.0)
+    lifx-http (0.2.1)
       grape (~> 0.6)
       grape-entity (~> 0.4)
       grape-swagger (~> 0.7)
