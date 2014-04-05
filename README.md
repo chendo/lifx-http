@@ -24,11 +24,11 @@ This is an **unofficial** JSON RESTful API service for controlling LIFX devices.
 * Test if working: `curl http://localhost:56780/lights.json`
 * Toggle all lights: `curl -XPUT http://localhost:56780/lights/all/toggle -d ''`
 * Set all lights to green:
-  * URL params: `curl -XPUT http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2 -d ''`
+  * URL params: `curl -XPUT "http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2" -d ''`
   * JSON body: `curl -XPUT http://localhost:56780/lights/all/color -H "Content-Type: application/json" -d '{"hue": 120, "saturation": 1, "brightness": 1, "duration":2}'`
-  * Override method by setting `_method`: `curl http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2&_method=put`
+  * Override method by setting `_method`: `curl "http://localhost:56780/lights/all/color?hue=120&saturation=1&brightness=1&duration=2&_method=put"`
 * Start a slow sunrise effect:
-  * `curl -XPUT http://localhost:56780/lights/all/color?hue=35&saturation=0.37&brightness=0.65&duration=10m -d ''`
+  * `curl -XPUT "http://localhost:56780/lights/all/color?hue=35&saturation=0.37&brightness=0.65&duration=10m" -d ''`
 
 ## API
 
