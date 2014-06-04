@@ -1,6 +1,6 @@
 # LIFX HTTP API
 
-[![Gem Version](https://badge.fury.io/rb/lifx-http.png)](https://rubygems.org/gems/lifx-http) 
+[![Gem Version](https://badge.fury.io/rb/lifx-http.png)](https://rubygems.org/gems/lifx-http)
 
 This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API adds some reliability that the [LIFX gem](https://github.com/LIFX/lifx-gem) does not include.
 
@@ -50,7 +50,7 @@ This is an **unofficial** JSON RESTful API service for controlling LIFX devices.
 ## Documentation
 
 This API is documented using [Swagger](https://github.com/wordnik/swagger-ui).
-To view documentation and play with the API, start the API server locally, then visit http://petstore.swagger.wordnik.com/ and put `http://localhost:3000/swagger_doc.json` in the first text box, then hit `Explore`.
+To view documentation and play with the API, start the API server locally, then visit http://petstore.swagger.wordnik.com/ and put `http://localhost:56700/swagger_doc.json` in the first text box, then hit `Explore`.
 
 You should see something like this:
 ![Swagger screenshot](doc.png)
