@@ -142,7 +142,7 @@ module LIFXHTTP
             params[:brightness],
             params[:kelvin]
           )
-          
+
           # parse minute and hour duration forms
           duration = case params[:duration]
           when /m$/i # Minutes
@@ -153,7 +153,7 @@ module LIFXHTTP
             params[:duration].to_f
           end
 
-          lifx.sync { 3.times { @target.set_color(color, duration: duration) } } # Retry 
+          lifx.sync { 3.times { @target.set_color(color, duration: duration) } } # Retry
           present_target(@target)
         end
       end
@@ -197,7 +197,7 @@ module LIFXHTTP
       end
     end
 
-    add_swagger_documentation(markdown: true)
+    add_swagger_documentation
   end
 end
 require "lifx-http/version"
