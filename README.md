@@ -50,7 +50,7 @@ This is an **unofficial** JSON RESTful API service for controlling LIFX devices.
 ## Documentation
 
 This API is documented using [Swagger](https://github.com/wordnik/swagger-ui).
-To view documentation and play with the API, start the API server locally, then visit http://petstore.swagger.wordnik.com/ and put `http://localhost:56700/swagger_doc.json` in the first text box, then hit `Explore`.
+To view documentation and play with the API, start the API server locally, then visit http://petstore.swagger.wordnik.com/ and put `http://localhost:56780/swagger_doc` in the first text box, then hit `Explore`.
 
 You should see something like this:
 ![Swagger screenshot](doc.png)
