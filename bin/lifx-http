@@ -31,6 +31,10 @@ OptionParser.new do |parser|
   parser.on("--bind BIND_ADDRESS", "Specify the IP the http server should bind to. Defaults to #{options[:bind_address]}") do |bind|
     options[:bind_address] = bind
   end
+  parser.on_tail("-h", "--help", "Show this message") do
+    puts parser
+    exit
+  end
 end.parse!
 
 app = Rack::Builder.new do
