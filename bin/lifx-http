@@ -9,6 +9,7 @@ require "mdns"
 
 options = {
   port: 56780,
+  bind_address: "0.0.0.0",
   mdns_host: "lifx-http",
   mdns_ip: begin
     Socket.ip_address_list.find { |ip| ip.ipv4_private? }.ip_address
@@ -24,8 +25,15 @@ OptionParser.new do |parser|
   parser.on("--hostname HOSTNAME", "Specify the host the MDNS broadcast should use. Defaults to #{options[:mdns_host]}") do |host|
     options[:mdns_host] = host
   end
-  parser.on("--ip MDNS_IP", "Specify the IP the MDNS record should resolve to. Defaults to #{options[:mdns_ip]}") do |ip|
+  parser.on("--ip MDNS_IP", "Specify the IP the MDNS record should resolve to. Specify empty \"\" to disable MDNS. Defaults to #{options[:mdns_ip]}") do |ip|
     options[:mdns_ip] = ip
+  end
+  parser.on("--bind BIND_ADDRESS", "Specify the IP the http server should bind to. Defaults to #{options[:bind_address]}") do |bind|
+    options[:bind_address] = bind
+  end
+  parser.on_tail("-h", "--help", "Show this message") do
+    puts parser
+    exit
   end
 end.parse!
 
@@ -41,10 +49,11 @@ app = Rack::Builder.new do
   run LIFXHTTP::API
 end
 
-if options[:mdns_ip]
+if !options[:mdns_ip].empty?
   MDNS.add_record("#{options[:mdns_host]}.local", 120, options[:mdns_ip])
   MDNS.start
   puts "lifx-http can be reached at http://#{options[:mdns_host]}.local:#{options[:port]}/"
 end
 
-Rack::Handler::WEBrick.run(app, Port: options[:port])
+Rack::Handler::WEBrick.run(app, Port: options[:port], BindAddress: options[:bind_address])
+
