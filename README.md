@@ -1,5 +1,8 @@
 # LIFX HTTP API
 
+This project currently has issues with the new 2.0 firmware. Updates pending.
+
+
 [![Gem Version](https://badge.fury.io/rb/lifx-http.png)](https://rubygems.org/gems/lifx-http)
 
 This is an **unofficial** JSON RESTful API service for controlling LIFX devices. This API adds some reliability that the [LIFX gem](https://github.com/LIFX/lifx-gem) does not include.
