@@ -127,6 +127,34 @@ module LIFXHTTP
           end
         end
 
+
+        desc "Turn light(s) on"
+        get :on do
+          set_power(@target, :on)
+          present_target(@target)
+        end
+
+        desc "Turn light(s) off"
+        get :off do
+          set_power(@target, :off)
+          present_target(@target)
+        end
+
+        desc "Toggle light(s) power state. Will turn lights off if any are on."
+        get :toggle do
+          if @target.is_a?(LIFX::LightCollection)
+            on = @target.to_a.any? { |light| light.on? }
+            desired_state = on ? :off : :on
+            set_power(@target, desired_state)
+            present_target(@target)
+          else
+            desired_state = @target.on? ? :off : :on
+            set_power(@target, desired_state)
+            present_target(@target)
+          end
+        end
+
+
         desc "Set colour of light(s)"
         params do
           requires :hue, type: Float, desc: "Hue: 0-360"
