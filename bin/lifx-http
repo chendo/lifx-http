@@ -55,5 +55,5 @@ if !options[:mdns_ip].empty?
   puts "lifx-http can be reached at http://#{options[:mdns_host]}.local:#{options[:port]}/"
 end
 
-Rack::Handler::WEBrick.run(app, Port: options[:port], BindAddress: options[:bind_address])
+Rack::Handler::WEBrick.run(app, Port: options[:port], Host: options[:bind_address])
 
